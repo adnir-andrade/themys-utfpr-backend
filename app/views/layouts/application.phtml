@@ -1,0 +1,70 @@
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreador de Problemas</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/assets/js/application.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/assets/css/application.css">
+</head>
+
+<body>
+    <nav class="navbar fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="<?= route('root') ?>">Problem Track</a>
+
+            <?php if ($this->current_user) : ?>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+                        <?= $this->current_user->email ?>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<?= route('profile.show') ?>">Profile</a>
+                        <a class="dropdown-item" href="<?= route('users.logout') ?>">Sair</a>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+        </div>
+    </nav>
+
+    <main class="container-fluid">
+        <div class="row">
+            <aside class="col-auto sidebar">
+                <nav>
+                    <ul class="nav flex-column mt-1">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= route('problems.index') ?>">Meus problemas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= route('reinforce.problems.supported') ?>">Problemas Apoiados</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= route('reinforce.problems') ?>">Todos Problemas</a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+            <section id="main-content" class="col">
+
+                <?php require '_flash_message.phtml'; ?>
+
+                <header class="mb-3">
+                    <h1>
+                        <?= $title ?>
+                    </h1>
+                </header>
+
+                <?php require $view ?>
+
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

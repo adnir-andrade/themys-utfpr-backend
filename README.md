@@ -1,4 +1,4 @@
-# Themys - A TTRPG Assistent (PhP + React)
+# Themys - A TTRPG Assistent (PhP + React Native)
 
 Themys Project is a Tabletop RPG assistent focused on providing players with direct access to essential information about their characters, campaigns, and especially their RPG system rules. The software also aims to allow the Dungeon Master to manage and configure essential aspects of the RPG system, providing utilities and automations that will help any DM to focus more on the campaign itself. The software is aimed at tabletop RPG players and Dungeon Masters who use the Dungeons & Dragons 5 (Next) rule system or homebrews.
 
@@ -8,8 +8,92 @@ Themys Project is a Tabletop RPG assistent focused on providing players with dir
 
 ## Installation
 
-WIP
+### Dependências
 
-```bash
-WIP
+- Docker
+- Docker Compose
+
+### To run
+
+#### Clone Repository
+
+```
+$ git clone git@github.com:SI-DABE/problem-track.git
+$ cd problem-track
+```
+
+#### Define the env variables
+
+```
+$ cp .env.example .env
+```
+
+#### Install the dependencies
+
+```
+$ ./run composer install
+```
+
+#### Up the containers
+
+```
+$ docker compose up -d
+```
+
+ou
+
+```
+$ ./run up -d
+```
+
+#### Create database and tables
+
+```
+$ ./run db:reset
+```
+
+#### Populate database
+
+```
+$ ./run db:populate
+```
+
+### Fixed uploads folder permission
+
+```
+sudo chown www-data:www-data public/assets/uploads
+```
+
+#### Run the tests
+
+```
+$ docker compose run --rm php ./vendor/bin/phpunit tests --color
+```
+
+ou
+
+```
+$ ./run test
+```
+
+#### Run the linters
+
+[PHPCS](https://github.com/PHPCSStandards/PHP_CodeSniffer/)
+
+```
+$ ./run phpcs
+```
+
+[PHPStan](https://phpstan.org/)
+
+```
+$ ./run phpstan
+```
+
+Access [localhost](http://localhost)
+
+### Teste de API
+
+```shell
+curl -H "Accept: application/json" localhost/problems
 ```
