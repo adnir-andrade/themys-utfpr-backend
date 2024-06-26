@@ -33,6 +33,8 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
     volumes:
       - dbdata:/var/lib/mysql
+    ports:
+      - 3306:3306
     networks:
       - app-network
 
