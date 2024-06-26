@@ -6,32 +6,29 @@ use App\Models\User;
 
 class UsersPopulate
 {
-    public static function populate()
-    {
-        $data =  [
-            'name' => 'Fulano',
-            'email' => 'fulano@example.com',
-            'password' => '123456',
-            'password_confirmation' => '123456'
-        ];
+  public static function populate(int $players_quantity, int $dms_quantity): void
+  {
+    $quantity = $players_quantity + $dms_quantity;
+    $player_array = array_fill(0, $players_quantity, 'player');
+    $dm_array = array_fill(0, $dms_quantity, 'dm');
+    $roles = array_merge($dm_array, $player_array);
 
-        $user = new User($data);
-        $user->save();
+    shuffle($roles);
 
-        $numberOfUsers = 10;
+    for ($i = 1; $i <= $quantity; $i++) {
+      $data = [
+        'name' => 'Hades Clone ' . $i,
+        'username' => 'Haotran_' . $i,
+        'email' => 'adnir' . $i . '@alunos.utfpr.edu.br',
+        'password' => 'bacon123',
+        'password_confirmation' => 'bacon123',
+        'role' => array_shift($roles)
+      ];
 
-        for ($i = 1; $i < $numberOfUsers; $i++) {
-            $data =  [
-                'name' => 'Fulano ' . $i,
-                'email' => 'fulano' . $i . '@example.com',
-                'password' => '123456',
-                'password_confirmation' => '123456'
-            ];
-
-            $user = new User($data);
-            $user->save();
-        }
-
-        echo "Users populated with $numberOfUsers registers\n";
+      $user = new User($data);
+      $user->save();
     }
+
+    echo "Users populated with $quantity registers\n";
+  }
 }

@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use App\Services\ProfileAvatar;
-use Core\Database\ActiveRecord\BelongsToMany;
+//use App\Services\ProfileAvatar;
 use Core\Database\ActiveRecord\HasMany;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
@@ -11,70 +10,78 @@ use Core\Database\ActiveRecord\Model;
 /**
  * @property int $id
  * @property string $name
+ * @property string $username
  * @property string $email
  * @property string $encrypted_password
- * @property Problem[] $problems
- * @property Problem[] $reinforced_problems
+ * @property string $role
  */
 class User extends Model
 {
-    protected static string $table = 'users';
-    protected static array $columns = ['name', 'email', 'encrypted_password', 'avatar_name'];
+  protected static string $table = 'users';
+  protected static array $columns = ['name', 'username', 'email', 'encrypted_password', 'role'];
 
-    protected ?string $password = null;
-    protected ?string $password_confirmation = null;
+  protected ?string $password = null;
+  protected ?string $password_confirmation = null;
 
-    public function problems(): HasMany
-    {
-        return $this->hasMany(Problem::class, 'user_id');
+  public function campaigns(): HasMany
+  {
+    return $this->hasMany(Campaign::class, 'dm_id'); // user_id?
+  }
+
+  public function campaigns_players(): HasMany
+  {
+    return $this->hasMany(CampaignsPlayer::class, 'player_id'); //user_id?
+  }
+
+  public function validates(): void
+  {
+    Validations::notEmpty('name', $this);
+    Validations::notEmpty('username', $this);
+    Validations::notEmpty('email', $this);
+    Validations::notEmpty('role', $this);
+
+    Validations::uniqueness('email', $this);
+    Validations::uniqueness('username', $this);
+
+    if ($this->newRecord()) {
+      Validations::passwordConfirmation($this);
+    }
+  }
+
+  public function authenticate(string $password): bool
+  {
+    if ($this->encrypted_password == null) {
+      return false;
     }
 
-    public function reinforcedProblems(): BelongsToMany
-    {
-        return $this->belongsToMany(Problem::class, 'problem_user_reinforce', 'user_id', 'problem_id');
+    return password_verify($password, $this->encrypted_password);
+  }
+
+  public static function findByEmail(string $email): User|null
+  {
+    return User::findBy(['email' => $email]);
+  }
+
+  public static function findByUsername(string $username): User|null
+  {
+    return User::findBy(['username' => $username]);
+  }
+
+  public function __set(string $property, mixed $value): void
+  {
+    parent::__set($property, $value);
+
+    if (
+      $property === 'password' &&
+      $this->newRecord() &&
+      $value !== null && $value !== ''
+    ) {
+      $this->encrypted_password = password_hash($value, PASSWORD_DEFAULT);
     }
+  }
 
-    public function validates(): void
-    {
-        Validations::notEmpty('name', $this);
-        Validations::notEmpty('email', $this);
-
-        Validations::uniqueness('email', $this);
-
-        if ($this->newRecord()) {
-            Validations::passwordConfirmation($this);
-        }
-    }
-
-    public function authenticate(string $password): bool
-    {
-        if ($this->encrypted_password == null) {
-            return false;
-        }
-
-        return password_verify($password, $this->encrypted_password);
-    }
-
-    public static function findByEmail(string $email): User | null
-    {
-        return User::findBy(['email' => $email]);
-    }
-
-    public function __set(string $property, mixed $value): void
-    {
-        parent::__set($property, $value);
-
-        if (
-            $property === 'password' &&
-            $this->newRecord() &&
-            $value !== null && $value !== ''
-        ) {
-            $this->encrypted_password = password_hash($value, PASSWORD_DEFAULT);
-        }
-    }
-
-    public function avatar(): ProfileAvatar
-    {
-        return new ProfileAvatar($this);
-    }
+//  public function avatar(): ProfileAvatar
+//  {
+//    return new ProfileAvatar($this);
+//  }
 }
