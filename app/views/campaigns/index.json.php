@@ -1,19 +1,18 @@
 <?php
-/** @var $users */
+/** @var $campaigns */
 /** @var $paginator */
 
-$usersToJson = [];
+$campaignsToJson = [];
 
-foreach ($users as $user) {
-  $usersToJson[] = [
-    'id' => $user->id,
-    'name' => $user->name,
-    'username' => $user->username,
-    'email' => $user->email,
-    'role' => $user->role];
+foreach ($campaigns as $campaign) {
+  $campaignsToJson[] = [
+    'id' => $campaign->id,
+    'dm_id' => $campaign->dm_id,
+    'name' => $campaign->name,
+    'next_session' => $campaign->next_session];
 }
 
-$json['users'] = $usersToJson;
+$json['campaigns'] = $campaignsToJson;
 $json['pagination'] = [
   'page' => $paginator->getPage(),
   'per_page' => $paginator->perPage(),

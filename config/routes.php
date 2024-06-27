@@ -2,6 +2,9 @@
 
 use App\Controllers\AuthenticationsController;
 use App\Controllers\UsersController;
+use App\Controllers\CampaignsController;
+use App\Controllers\CampaignsPlayersController;
+use App\Controllers\CharactersController;
 use App\Controllers\ProfileController;
 use Core\Router\Route;
 
@@ -23,4 +26,25 @@ Route::middleware('auth')->group(function () {
   Route::post('/users', [UsersController::class, 'create'])->name('users.create');
   Route::put('/users/{id}', [UsersController::class, 'update'])->name('users.update');
   Route::delete('/users/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+
+  // Campaings
+  Route::get('/campaigns', [CampaignsController::class, 'index'])->name('campaigns.index');
+  Route::get('/campaigns/{id}', [CampaignsController::class, 'show'])->name('campaigns.show');
+  Route::post('/campaigns', [CampaignsController::class, 'create'])->name('campaigns.create');
+  Route::put('/campaigns/{id}', [CampaignsController::class, 'update'])->name('campaigns.update');
+  Route::delete('/campaigns/{id}', [CampaignsController::class, 'destroy'])->name('campaigns.destroy');
+
+  // CampaingsPlayers
+  Route::get('/campaigns_players', [CampaignsPlayersController::class, 'index'])->name('campaigns_players.index');
+  Route::get('/campaigns_players/{id}', [CampaignsPlayersController::class, 'show'])->name('campaigns_players.show');
+  Route::post('/campaigns_players', [CampaignsPlayersController::class, 'create'])->name('campaigns_players.create');
+  Route::put('/campaigns_players/{id}', [CampaignsPlayersController::class, 'update'])->name('campaigns_players.update');
+  Route::delete('/campaigns_players/{id}', [CampaignsPlayersController::class, 'destroy'])->name('campaigns_players.destroy');
+
+  // CharacterPlayers
+  Route::get('/character', [CharactersController::class, 'index'])->name('character.index');
+  Route::get('/character/{id}', [CharactersController::class, 'show'])->name('character.show');
+  Route::post('/character', [CharactersController::class, 'create'])->name('character.create');
+  Route::put('/character/{id}', [CharactersController::class, 'update'])->name('character.update');
+  Route::delete('/character/{id}', [CharactersController::class, 'destroy'])->name('character.destroy');
 });
