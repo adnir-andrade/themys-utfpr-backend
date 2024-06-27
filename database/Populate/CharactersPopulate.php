@@ -35,8 +35,8 @@ class CharactersPopulate
       ];
 
       $character = new Character($data);
-      $campaigns_player->update(['character_id' => $character->id]);
       $character->save();
+      $campaigns_player->update(['character_id' => $character->id]);
     }
 
     $quantity = count($campaigns_players);
