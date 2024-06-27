@@ -1,8 +1,9 @@
 <?php
+/** @var $users */
+/** @var $paginator */
 
 $usersToJson = [];
 
-/** @var \App\Models\User $users */
 foreach ($users as $user) {
   $usersToJson[] = [
     'id' => $user->id,

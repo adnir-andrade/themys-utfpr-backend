@@ -1,4 +1,5 @@
 <?php
+/** @var $user */
 
 $json['users'] = [
   'id' => $user->id,
