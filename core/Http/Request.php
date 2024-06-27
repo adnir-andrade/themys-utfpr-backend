@@ -2,7 +2,9 @@
 
 namespace Core\Http;
 
-class Request
+use AllowDynamicProperties;
+
+#[AllowDynamicProperties] class Request
 {
   private string $method;
   private string $uri;
@@ -62,5 +64,10 @@ class Request
   public function getBody(): string
   {
     return file_get_contents('php://input');
+  }
+
+  public function getHeader(string $name): ?string
+  {
+    return $this->headers[$name] ?? null;
   }
 }
