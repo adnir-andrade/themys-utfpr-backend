@@ -2,6 +2,7 @@
 
 use App\Controllers\AuthenticationsController;
 use App\Controllers\UsersController;
+use App\Controllers\CampaignsController;
 use App\Controllers\ProfileController;
 use Core\Router\Route;
 
@@ -23,4 +24,11 @@ Route::middleware('auth')->group(function () {
   Route::post('/users', [UsersController::class, 'create'])->name('users.create');
   Route::put('/users/{id}', [UsersController::class, 'update'])->name('users.update');
   Route::delete('/users/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+
+  // Campaings
+  Route::get('/campaigns', [CampaignsController::class, 'index'])->name('campaigns.index');
+  Route::get('/campaigns/{id}', [CampaignsController::class, 'show'])->name('campaigns.show');
+  Route::post('/campaigns', [CampaignsController::class, 'create'])->name('campaigns.create');
+  Route::put('/campaigns/{id}', [CampaignsController::class, 'update'])->name('campaigns.update');
+  Route::delete('/campaigns/{id}', [CampaignsController::class, 'destroy'])->name('campaigns.destroy');
 });
