@@ -3,6 +3,7 @@
 use App\Controllers\AuthenticationsController;
 use App\Controllers\UsersController;
 use App\Controllers\CampaignsController;
+use App\Controllers\CampaignsPlayersController;
 use App\Controllers\ProfileController;
 use Core\Router\Route;
 
@@ -31,4 +32,11 @@ Route::middleware('auth')->group(function () {
   Route::post('/campaigns', [CampaignsController::class, 'create'])->name('campaigns.create');
   Route::put('/campaigns/{id}', [CampaignsController::class, 'update'])->name('campaigns.update');
   Route::delete('/campaigns/{id}', [CampaignsController::class, 'destroy'])->name('campaigns.destroy');
+
+  // CampaingsPlayers
+  Route::get('/campaigns_players', [CampaignsPlayersController::class, 'index'])->name('campaigns_players.index');
+  Route::get('/campaigns_players/{id}', [CampaignsPlayersController::class, 'show'])->name('campaigns_players.show');
+  Route::post('/campaigns_players', [CampaignsPlayersController::class, 'create'])->name('campaigns_players.create');
+  Route::put('/campaigns_players/{id}', [CampaignsPlayersController::class, 'update'])->name('campaigns_players.update');
+  Route::delete('/campaigns_players/{id}', [CampaignsPlayersController::class, 'destroy'])->name('campaigns_players.destroy');
 });
