@@ -40,11 +40,19 @@ class User extends Model
     Validations::notEmpty('email', $this);
     Validations::notEmpty('role', $this);
 
-    Validations::uniqueness('email', $this);
-    Validations::uniqueness('username', $this);
+    self::validateUniqueness('email', $this);
+    self::validateUniqueness('username', $this);
 
     if ($this->newRecord()) {
       Validations::passwordConfirmation($this);
+    }
+  }
+
+  private function validateUniqueness(string $field): void
+  {
+    $existing = User::findBy([$field => $this->$field]);
+    if ($existing && $existing->id !== $this->id) {
+      Validations::uniqueness($field, $this);
     }
   }
 
