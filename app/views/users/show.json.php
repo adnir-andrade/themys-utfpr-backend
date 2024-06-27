@@ -1,7 +1,7 @@
 <?php
 /** @var $user */
 
-$json['users'] = [
+$json['user'] = [
   'id' => $user->id,
   'name' => $user->name,
   'username' => $user->username,
