@@ -42,9 +42,9 @@ Route::middleware('auth')->group(function () {
   Route::delete('/campaigns_players/{id}', [CampaignsPlayersController::class, 'destroy'])->name('campaigns_players.destroy');
 
   // CharacterPlayers
-  Route::get('/character', [CharactersController::class, 'index'])->name('character.index');
-  Route::get('/character/{id}', [CharactersController::class, 'show'])->name('character.show');
-  Route::post('/character', [CharactersController::class, 'create'])->name('character.create');
-  Route::put('/character/{id}', [CharactersController::class, 'update'])->name('character.update');
-  Route::delete('/character/{id}', [CharactersController::class, 'destroy'])->name('character.destroy');
+  Route::get('/characters', [CharactersController::class, 'index'])->name('characters.index');
+  Route::get('/characters/{id}', [CharactersController::class, 'show'])->name('characters.show');
+  Route::post('/characters', [CharactersController::class, 'create'])->name('characters.create');
+  Route::put('/characters/{id}', [CharactersController::class, 'update'])->name('characters.update');
+  Route::delete('/characters/{id}', [CharactersController::class, 'destroy'])->name('characters.destroy');
 });
