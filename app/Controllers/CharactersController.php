@@ -10,10 +10,8 @@ class CharactersController extends Controller
 {
   public function index(Request $request): void
   {
-    $paginator = Character::paginate(page: $request->getParam('page', 1));
-    $characters = $paginator->registers();
-
-    $this->renderJson('characters/index', compact('paginator', 'characters'));
+    $characters = Character::all();
+    $this->renderJson('characters/index', compact('characters'));
   }
 
   public function show(Request $request): void
@@ -83,5 +81,26 @@ class CharactersController extends Controller
 
     http_response_code(200);
     echo json_encode(['message' => 'Character deleted successfully']);
+  }
+
+  public function getCharactersByPlayer(Request $request): void
+  {
+    $playerId = $request->getParam('player_id');
+
+    if (!$playerId) {
+      http_response_code(400);
+      echo json_encode(['error' => 'Player ID is required']);
+      return;
+    }
+
+    $characters = Character::findByPlayerId($playerId);
+
+    if (!$characters) {
+      http_response_code(404);
+      echo json_encode(['error' => 'No characters found for this user']);
+      return;
+    }
+
+    $this->renderJson('characters/index', compact('characters'));
   }
 }

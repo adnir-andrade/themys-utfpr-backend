@@ -47,4 +47,5 @@ Route::middleware('auth')->group(function () {
   Route::post('/characters', [CharactersController::class, 'create'])->name('characters.create');
   Route::put('/characters/{id}', [CharactersController::class, 'update'])->name('characters.update');
   Route::delete('/characters/{id}', [CharactersController::class, 'destroy'])->name('characters.destroy');
+  Route::get('/characters/player/{player_id}', [CharactersController::class, 'getCharactersByPlayer'])->name('characters.getCharactersByPlayer');
 });

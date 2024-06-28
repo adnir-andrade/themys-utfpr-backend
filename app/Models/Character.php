@@ -91,4 +91,9 @@ class Character extends Model
   {
     return Character::findBy(['name' => $name]);
   }
+
+  public static function findByPlayerId(int $playerId): array
+  {
+    return self::where(['player_id' => $playerId]);
+  }
 }
