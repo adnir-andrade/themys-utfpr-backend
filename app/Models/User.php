@@ -75,6 +75,11 @@ class User extends Model
     return User::findBy(['username' => $username]);
   }
 
+  public static function find(int $id): ?User
+  {
+    return User::findBy(['id' => $id]);
+  }
+
   public function __set(string $property, mixed $value): void
   {
     parent::__set($property, $value);

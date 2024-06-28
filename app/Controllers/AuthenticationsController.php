@@ -6,37 +6,32 @@ use App\Models\User;
 use Core\Http\Controllers\Controller;
 use Core\Http\Request;
 use Lib\Authentication\Auth;
-use Lib\FlashMessage;
 
 class AuthenticationsController extends Controller
 {
-    protected string $layout = 'login';
+  public function authenticate(Request $request) : void
+  {
+    $params = json_decode($request->getBody(), true);
 
-    public function new(): void
-    {
-        $this->render('authentications/new');
+    $email = $params['email'];
+    $password = $params['password'];
+
+    $user = User::findByEmail($email);
+
+    if ($user && $user->authenticate($password)) {
+      $token = Auth::login($user);
+      echo json_encode(['token' => $token]);
+    } else {
+      http_response_code(401);
+      echo json_encode(['error' => 'Invalid credentials. Remember to login first.']);
     }
+  }
 
-    public function authenticate(Request $request): void
-    {
-        $params = $request->getParam('user');
-        $user = User::findByEmail($params['email']);
-
-        if ($user && $user->authenticate($params['password'])) {
-            Auth::login($user);
-
-            FlashMessage::success('Login realizado com sucesso!');
-            $this->redirectTo(route('problems.index'));
-        } else {
-            FlashMessage::danger('Email e/ou senha inválidos!');
-            $this->redirectTo(route('users.login'));
-        }
-    }
-
-    public function destroy(): void
-    {
-        Auth::logout();
-        FlashMessage::success('Logout realizado com sucesso!');
-        $this->redirectTo(route('users.login'));
-    }
+  public function destroy(Request $request): void
+  {
+    // Retorna mensagem de sucesso porque, no momento, naão faz nada.
+    // Se der tempo, armazenar token no banco de dados e depois deletar aqui.
+    http_response_code(200);
+    echo json_encode(['message' => 'Logout successfully! You need to manually delete your token for now because... Because yeah.']);
+  }
 }

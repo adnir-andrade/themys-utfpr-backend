@@ -9,8 +9,8 @@ use App\Controllers\ProfileController;
 use Core\Router\Route;
 
 // Authentication
-Route::get('/login', [AuthenticationsController::class, 'new'])->name('users.login');
 Route::post('/login', [AuthenticationsController::class, 'authenticate'])->name('users.authenticate');
+Route::post('/logout', [AuthenticationsController::class, 'destroy'])->name('users.logout');
 
 Route::middleware('auth')->group(function () {
   // Logout
