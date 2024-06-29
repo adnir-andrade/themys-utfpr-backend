@@ -95,12 +95,6 @@ class CharactersController extends Controller
 
     $characters = Character::findByPlayerId($playerId);
 
-    if (!$characters) {
-      http_response_code(404);
-      echo json_encode(['error' => 'No characters found for this user']);
-      return;
-    }
-
     $this->renderJson('characters/index', compact('characters'));
   }
 }
