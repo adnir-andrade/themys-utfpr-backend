@@ -20,7 +20,16 @@ class AuthenticationsController extends Controller
 
     if ($user && $user->authenticate($password)) {
       $token = Auth::login($user);
-      echo json_encode(['token' => $token]);
+
+      $userInfo = [
+        'id' => $user->id,
+        'name' => $user->name,
+        'username' => $user->username,
+        'email' => $user->email,
+        'role' => $user->role
+      ];
+
+      echo json_encode(['token' => $token, 'user' => $userInfo]);
     } else {
       http_response_code(401);
       echo json_encode(['error' => 'Invalid credentials. Remember to login first.']);
