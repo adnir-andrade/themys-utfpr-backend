@@ -57,9 +57,8 @@ CREATE TABLE characters
   charisma     int          NOT NULL DEFAULT 10,
   points_to_spend int       NOT NULL DEFAULT 27,
   skills JSON         NOT NULL,
-  background   varchar(255),
+  background   TEXT,
   FOREIGN KEY (player_id) REFERENCES users (id) ON DELETE CASCADE
-
 );
 
 DROP TABLE IF EXISTS profile_images;
