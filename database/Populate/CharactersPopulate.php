@@ -31,6 +31,8 @@ class CharactersPopulate
         'intelligence' => rand(8, 18),
         'wisdom' => rand(8, 18),
         'charisma' => rand(8, 18),
+        'points_to_spend' => 0,
+        'skills' => json_encode(['Stealth', 'Survival', 'Tracking']),
         'background' => 'Background information for character ' . $i,
       ];
 
