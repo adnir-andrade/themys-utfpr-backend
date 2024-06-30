@@ -149,10 +149,14 @@ abstract class Model
                     INSERT INTO {$table} ({$attributes}) VALUES ({$values});
                 SQL;
 
-                $stmt = $pdo->prepare($sql);
-                foreach (static::$columns as $column) {
-                    $stmt->bindValue($column, $this->$column);
+              $stmt = $pdo->prepare($sql);
+              foreach (static::$columns as $column) {
+                $value = $this->$column;
+                if (is_array($value)) {
+                  $value = json_encode($value);
                 }
+                $stmt->bindValue(":{$column}", $value);
+              }
 
                 $stmt->execute();
 
@@ -296,37 +300,35 @@ abstract class Model
      * @param array<string, mixed> $conditions
      * @return array<static>
      */
-    public static function where(array $conditions): array
-    {
-        $table = static::$table;
-        $attributes = implode(', ', static::$columns);
+  public static function where(array $conditions): array
+  {
+    $table = static::$table;
+    $attributes = implode(', ', static::$columns);
 
-        $sql = <<<SQL
-            SELECT id, {$attributes} FROM {$table} WHERE 
-        SQL;
+    $sql = "SELECT id, {$attributes} FROM {$table} WHERE ";
 
-        $sqlConditions = array_map(function ($column) {
-            return "{$column} = :{$column}";
-        }, array_keys($conditions));
+    $sqlConditions = array_map(function ($column) {
+      return "{$column} = :{$column}";
+    }, array_keys($conditions));
 
-        $sql .= implode(' AND ', $sqlConditions);
+    $sql .= implode(' AND ', $sqlConditions);
 
-        $pdo = Database::getDatabaseConn();
-        $stmt = $pdo->prepare($sql);
+    $pdo = Database::getDatabaseConn();
+    $stmt = $pdo->prepare($sql);
 
-        foreach ($conditions as $column => $value) {
-            $stmt->bindValue($column, $value);
-        }
-
-        $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $models = [];
-        foreach ($rows as $row) {
-            $models[] = new static($row);
-        }
-        return $models;
+    foreach ($conditions as $column => $value) {
+      $stmt->bindValue(":{$column}", $value);
     }
+
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $models = [];
+    foreach ($rows as $row) {
+      $models[] = new static($row);
+    }
+    return $models;
+  }
 
     /**
      * @param array<string, mixed> $conditions
