@@ -21,6 +21,8 @@ foreach ($characters as $character) {
     'intelligence' => $character->intelligence,
     'wisdom' => $character->wisdom,
     'charisma' => $character->charisma,
+    'points_to_spend' => $character->points_to_spend,
+    'skills' => $character->skills,
     'background' => $character->background
   ];
 }

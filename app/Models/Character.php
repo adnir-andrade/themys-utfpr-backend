@@ -24,6 +24,8 @@ use Core\Database\ActiveRecord\Model;
  * * @property int $intelligence
  * * @property int $wisdom
  * * @property int $charisma
+ * * @property int $points_to_spend
+ * * @property int $skills
  * * @property string|null $background
  */
 class Character extends Model
@@ -44,6 +46,8 @@ class Character extends Model
     'intelligence',
     'wisdom',
     'charisma',
+    'points_to_spend',
+    'skills',
     'background'
   ];
 
@@ -75,6 +79,8 @@ class Character extends Model
     Validations::notEmpty('intelligence', $this);
     Validations::notEmpty('wisdom', $this);
     Validations::notEmpty('charisma', $this);
+    Validations::notEmpty('points_to_spend', $this);
+    Validations::notEmpty('skills', $this);
 
     Validations::minValue('level', 1, $this);
     Validations::minValue('klass_level', 1, $this);
