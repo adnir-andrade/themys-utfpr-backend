@@ -10,7 +10,7 @@ CREATE TABLE users
   email              varchar(255)        NOT NULL,
   encrypted_password VARCHAR(255)        NOT NULL,
   role               varchar(255)        NOT NULL,
-  profile_url        varchar(255) NOT NULL DEFAULT './assets/image/profile/anon.jpg'
+  profile_url        varchar(2000) NOT NULL DEFAULT './assets/image/profile/anon.jpg'
 );
 
 DROP TABLE IF EXISTS campaigns;
