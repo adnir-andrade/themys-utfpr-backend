@@ -26,12 +26,13 @@ class CharactersController extends Controller
   public function create(Request $request): void
   {
     $params = json_decode($request->getBody(), true);
+    $characterData = $params['character'];
 
-    $character = new Character($params['character']);
+    $character = new Character($characterData);
 
     if ($character->save()) {
       http_response_code(201);
-      echo json_encode(['message' => 'Character registered!', 'character' => $params]);
+      echo json_encode(['message' => 'Character registered!', 'character' => $characterData]);
     } else {
       http_response_code(422);
       echo json_encode(['error' => 'Unprocessable Entity... Please, verify.']);
