@@ -1,34 +1,45 @@
 <?php
-//
-//namespace Tests\Unit\Lib\Authentication;
-//
-//use Lib\Authentication\Auth;
-//use App\Models\User;
-//use Tests\TestCase;
-//
-//class AuthTest extends TestCase
-//{
-//    private User $user;
-//
-//    public function setUp(): void
-//    {
-//        parent::setUp();
-//        $_SESSION = [];
-//        $this->user = new User([
-//            'name' => 'User 1',
-//            'email' => 'fulano@example.com',
-//            'password' => '123456',
-//            'password_confirmation' => '123456'
-//        ]);
-//        $this->user->save();
-//    }
-//
-//    public function tearDown(): void
-//    {
-//        parent::setUp();
-//        $_SESSION = [];
-//    }
-//
+
+namespace Tests\Unit\Lib\Authentication;
+
+use Lib\Authentication\Auth;
+use App\Models\User;
+use Tests\TestCase;
+
+class AuthTest extends TestCase
+{
+    private User $user;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $_SESSION = [];
+
+      $this->user = new User([
+        'name' => 'player',
+        'username' => 'player',
+        'email' => 'player@example.com',
+        'password' => '123456',
+        'password_confirmation' => '123456',
+        'role' => 'player',
+        'profile_url' => './assets/image/profile/anon.jpg'
+      ]);
+      $this->user->save();
+    }
+
+    public function test_set_id(): void
+    {
+      $this->user->id = 10;
+      $this->assertEquals(10, $this->user->id);
+    }
+
+    public function tearDown(): void
+    {
+        parent::setUp();
+        $_SESSION = [];
+    }
+}
+
 //    public function test_login(): void
 //    {
 //        Auth::login($this->user);

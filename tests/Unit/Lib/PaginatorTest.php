@@ -1,28 +1,37 @@
 <?php
-//
-//namespace Tests\Unit\Lib;
-//
-//use App\Models\Problem;
-//use App\Models\User;
-//use Lib\Paginator;
-//use Tests\TestCase;
-//
-//class PaginatorTest extends TestCase
-//{
-//    private Paginator $paginator;
-//    /** @var mixed[] $problems */
-//    private array $problems;
-//
-//    public function setUp(): void
-//    {
-//        parent::setUp();
-//        $user = new User([
-//            'name' => 'User 1',
-//            'email' => 'fulano@example.com',
-//            'password' => '123456',
-//            'password_confirmation' => '123456'
-//        ]);
-//        $user->save();
+
+namespace Tests\Unit\Lib;
+
+use App\Models\User;
+use Lib\Paginator;
+use Tests\TestCase;
+
+class PaginatorTest extends TestCase
+{
+  private User $user;
+  private Paginator $paginator;
+    public function setUp(): void
+    {
+      parent::setUp();
+
+      $this->user = new User([
+        'name' => 'User 1',
+        'username' => 'User1',
+        'email' => 'fulano@example.com',
+        'password' => '123456',
+        'password_confirmation' => '123456',
+        'role' => 'player',
+        'profile_url' => 'http://example.com/profile',
+      ]);
+      $this->user->save();
+    }
+
+  public function test_set_id(): void
+  {
+    $this->user->id = 10;
+    $this->assertEquals(10, $this->user->id);
+  }
+}
 //
 //        for ($i = 0; $i < 10; $i++) {
 //            $problem = new Problem(['title' => "Problem $i", 'user_id' => $user->id]);
