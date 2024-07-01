@@ -4,7 +4,8 @@ namespace Core\Http;
 
 use AllowDynamicProperties;
 
-#[AllowDynamicProperties] class Request
+#[AllowDynamicProperties]
+class Request
 {
   private string $method;
   private string $uri;
@@ -15,12 +16,15 @@ use AllowDynamicProperties;
   /** @var array<string, string> */
   private array $headers;
 
+  private string $body;
+
   public function __construct()
   {
     $this->method = $_REQUEST['_method'] ?? $_SERVER['REQUEST_METHOD'];
     $this->uri = $_SERVER['REQUEST_URI'];
     $this->params = $_REQUEST;
     $this->headers = function_exists('getallheaders') ? getallheaders() : [];
+    $this->body = file_get_contents('php://input');
   }
 
   public function getMethod(): string
@@ -63,7 +67,12 @@ use AllowDynamicProperties;
 
   public function getBody(): string
   {
-    return file_get_contents('php://input');
+    return $this->body;
+  }
+
+  public function setBody(string $body): void
+  {
+    $this->body = $body;
   }
 
   public function getHeader(string $name): ?string
