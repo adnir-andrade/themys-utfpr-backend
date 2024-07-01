@@ -41,18 +41,42 @@ class CampaignsPlayer extends Model
     Validations::notEmpty('campaign_id', $this);
   }
 
-  public static function findByPlayer(int $player_id): CampaignsPlayer|null
+  public static function findPlayersByCampaignId(int $campaign_id): array|null
   {
-    return CampaignsPlayer::findBy(['player_id' => $player_id]);
+    $campaignPlayers = CampaignsPlayer::where(['campaign_id' => $campaign_id]);
+    $players = [];
+    foreach ($campaignPlayers as $campaignPlayer) {
+      $players[] = User::findById($campaignPlayer->player_id);
+    }
+    return $players;
   }
 
-  public static function findByCampaign(int $campaign_id): CampaignsPlayer|null
+  public static function findCharactersByCampaignId(int $campaign_id): array|null
   {
-    return CampaignsPlayer::findBy(['campaign_id' => $campaign_id]);
+    $campaignPlayers = CampaignsPlayer::where(['campaign_id' => $campaign_id]);
+    $characters = [];
+    foreach ($campaignPlayers as $campaignPlayer) {
+      $characters[] = Character::findById($campaignPlayer->character_id);
+    }
+    return $characters;
   }
 
-  public static function findByCharacter(int $character_id): CampaignsPlayer|null
+  public static function findCampaignsByPlayerId(int $player_id): array|null
   {
-    return CampaignsPlayer::findBy(['character_id' => $character_id]);
+    $campaignPlayers = CampaignsPlayer::where(['player_id' => $player_id]);
+    $campaigns = [];
+    foreach ($campaignPlayers as $campaignPlayer) {
+      $campaigns[] = Campaign::findById($campaignPlayer->campaign_id);
+    }
+    return $campaigns;
+  }
+
+  public static function findCampaignByCharacterId(int $character_id): Campaign|null
+  {
+    $campaignPlayer = CampaignsPlayer::findBy(['character_id' => $character_id]);
+    if ($campaignPlayer) {
+      return Campaign::findById($campaignPlayer->campaign_id);
+    }
+    return null;
   }
 }

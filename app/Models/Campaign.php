@@ -42,8 +42,13 @@ class Campaign extends Model
     Validations::notEmpty('name', $this);
   }
 
-  public static function findByDmId(int $dm_id): Campaign|null
+  public static function findByDmId(int $dm_id): array | null
   {
-    return Campaign::findBy(['dm_id' => $dm_id]);
+    return Campaign::where(['dm_id' => $dm_id]);
+  }
+
+  public static function findByName(string $name): Campaign|null
+  {
+    return Campaign::findBy(['name' => $name]);
   }
 }

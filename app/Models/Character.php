@@ -93,11 +93,6 @@ class Character extends Model
     Validations::minValue('charisma', 1, $this);
   }
 
-  public static function findByName(string $name): Character|null
-  {
-    return Character::findBy(['name' => $name]);
-  }
-
   public static function findByPlayerId(int $playerId): array
   {
     return self::where(['player_id' => $playerId]);
