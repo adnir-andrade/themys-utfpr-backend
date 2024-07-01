@@ -7,5 +7,3 @@ $json['campaign'] = [
   'name' => $campaign->name,
   'next_session'=> $campaign->next_session,
 ];
-
-echo json_encode($json);

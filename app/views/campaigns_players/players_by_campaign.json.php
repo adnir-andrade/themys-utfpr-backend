@@ -10,5 +10,3 @@ foreach ($players as $player) {
 }
 
 $json['players'] = $playersToJson;
-
-echo json_encode($json);

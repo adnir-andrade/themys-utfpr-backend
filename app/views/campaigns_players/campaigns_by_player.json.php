@@ -10,5 +10,3 @@ foreach ($campaigns as $campaign) {
 }
 
 $json['campaigns'] = $campaignsToJson;
-
-echo json_encode($json);
