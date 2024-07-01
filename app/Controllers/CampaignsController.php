@@ -84,4 +84,19 @@ class CampaignsController extends Controller
     http_response_code(200);
     echo json_encode(['message' => 'Campaign deleted successfully']);
   }
+
+  public function findByDmId(Request $request): void
+  {
+    $params = $request->getParams();
+    $dm_id = $params['id'];
+
+    $campaigns = Campaign::findByDmId($dm_id);
+
+    if ($campaigns) {
+      $this->renderJson('campaigns/by_dm', compact('campaigns'));
+    } else {
+      http_response_code(404);
+      echo json_encode(['error' => 'No campaigns found for the specified DM']);
+    }
+  }
 }

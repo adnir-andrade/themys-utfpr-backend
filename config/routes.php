@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
   Route::post('/campaigns', [CampaignsController::class, 'create'])->name('campaigns.create');
   Route::put('/campaigns/{id}', [CampaignsController::class, 'update'])->name('campaigns.update');
   Route::delete('/campaigns/{id}', [CampaignsController::class, 'destroy'])->name('campaigns.destroy');
+  Route::get('/campaigns/by_dm/{id}', [CampaignsController::class, 'findByDmId'])->name('campaigns.by_dm');
 
   // CampaingsPlayers
   Route::get('/campaigns_players', [CampaignsPlayersController::class, 'index'])->name('campaigns_players.index');
