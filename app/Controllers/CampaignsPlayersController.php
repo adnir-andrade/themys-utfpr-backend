@@ -84,4 +84,49 @@ class CampaignsPlayersController extends Controller
     http_response_code(200);
     echo json_encode(['message' => 'CampaignsPlayer deleted successfully']);
   }
+
+  public function playersByCampaignId(Request $request): void
+  {
+    $params = $request->getParams();
+    $campaign_id = $params['id'];
+
+    $players = CampaignsPlayer::findPlayersByCampaignId($campaign_id);
+
+    $this->renderJson('campaigns_players/players_by_campaign', compact('players'));
+  }
+
+  public function charactersByCampaignId(Request $request): void
+  {
+    $params = $request->getParams();
+    $campaign_id = $params['id'];
+
+    $characters = CampaignsPlayer::findCharactersByCampaignId($campaign_id);
+
+    $this->renderJson('campaigns_players/characters_by_campaign', compact('characters'));
+  }
+
+  public function campaignsByPlayerId(Request $request): void
+  {
+    $params = $request->getParams();
+    $player_id = $params['id'];
+
+    $campaigns = CampaignsPlayer::findCampaignsByPlayerId($player_id);
+
+    $this->renderJson('campaigns_players/campaigns_by_player', compact('campaigns'));
+  }
+
+  public function campaignByCharacterId(Request $request): void
+  {
+    $params = $request->getParams();
+    $character_id = $params['id'];
+
+    $campaign = CampaignsPlayer::findCampaignByCharacterId($character_id);
+
+    if ($campaign) {
+      $this->renderJson('campaigns_players/campaign_by_character', compact('campaign'));
+    } else {
+      http_response_code(404);
+      echo json_encode(['error' => 'Campaign not found for the specified character']);
+    }
+  }
 }

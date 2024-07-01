@@ -40,6 +40,10 @@ Route::middleware('auth')->group(function () {
   Route::post('/campaigns_players', [CampaignsPlayersController::class, 'create'])->name('campaigns_players.create');
   Route::put('/campaigns_players/{id}', [CampaignsPlayersController::class, 'update'])->name('campaigns_players.update');
   Route::delete('/campaigns_players/{id}', [CampaignsPlayersController::class, 'destroy'])->name('campaigns_players.destroy');
+  Route::get('/campaigns_players/players_by_campaign/{id}', [CampaignsPlayersController::class, 'playersByCampaignId'])->name('campaigns_players.players_by_campaign');
+  Route::get('/campaigns_players/characters_by_campaign/{id}', [CampaignsPlayersController::class, 'charactersByCampaignId'])->name('campaigns_players.characters_by_campaign');
+  Route::get('/campaigns_players/campaigns_by_player/{id}', [CampaignsPlayersController::class, 'campaignsByPlayerId'])->name('campaigns_players.campaigns_by_player');
+  Route::get('/campaigns_players/campaign_by_character/{id}', [CampaignsPlayersController::class, 'campaignByCharacterId'])->name('campaigns_players.campaign_by_character');
 
   // CharacterPlayers
   Route::get('/characters', [CharactersController::class, 'index'])->name('characters.index');
