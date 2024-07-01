@@ -26,7 +26,8 @@ class AuthenticationsController extends Controller
         'name' => $user->name,
         'username' => $user->username,
         'email' => $user->email,
-        'role' => $user->role
+        'role' => $user->role,
+        'profile_url' => $user->profile_url,
       ];
 
       echo json_encode(['token' => $token, 'user' => $userInfo]);

@@ -19,10 +19,11 @@ class UsersPopulate
       $data = [
         'name' => 'Hades Clone ' . $i,
         'username' => 'Haotran_' . $i,
-        'email' => 'adnir' . $i . '@alunos.utfpr.edu.br',
+        'email' => 'ad' . $i . '@ad.com',
         'password' => 'bacon123',
         'password_confirmation' => 'bacon123',
-        'role' => array_shift($roles)
+        'role' => array_shift($roles),
+        'profile_url' => './assets/image/profile/anon.jpg'
       ];
 
       $user = new User($data);

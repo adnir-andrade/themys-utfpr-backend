@@ -9,7 +9,8 @@ CREATE TABLE users
   username           varchar(255) UNIQUE NOT NULL,
   email              varchar(255)        NOT NULL,
   encrypted_password VARCHAR(255)        NOT NULL,
-  role               varchar(255)        NOT NULL
+  role               varchar(255)        NOT NULL,
+  profile_url        varchar(255) NOT NULL DEFAULT './assets/image/profile/anon.jpg'
 );
 
 DROP TABLE IF EXISTS campaigns;
@@ -66,7 +67,7 @@ DROP TABLE IF EXISTS profile_images;
 CREATE TABLE profile_images
 (
   id        int AUTO_INCREMENT PRIMARY KEY,
-  url       varchar(255) NOT NULL DEFAULT './assets/image/avatar.jpg',
+  url       varchar(255) NOT NULL DEFAULT './assets/image/profile/anon.jpg',
   entity_id int          NOT NULL,
   context   varchar(10)  NOT NULL,
   constraint unique (entity_id, context)
