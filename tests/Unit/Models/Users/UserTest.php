@@ -108,7 +108,7 @@ class UserTest extends TestCase
     $this->assertFalse($user->isValid());
     $this->assertFalse($user->save());
 
-    $this->assertEquals('as senhas devem ser iguais!', $user->errors('password'));
+    $this->assertEquals('as senhas devem ser idênticas!', $user->errors('password'));
   }
 
   public function test_find_by_id_should_return_the_user(): void
