@@ -5,9 +5,32 @@ namespace App\Controllers;
 use Core\Http\Controllers\Controller;
 use Core\Http\Request;
 use App\Models\CampaignsPlayer;
+use Lib\Authentication\Auth;
 
 class CampaignsPlayersController extends Controller
 {
+  private function checkRole($request, $role) {
+    $authHeader = $request->getHeader('Authorization');
+    if (!$authHeader) {
+      http_response_code(401);
+      echo json_encode(['error' => 'Unauthorized']);
+      exit();
+    }
+
+    list($jwt) = sscanf($authHeader, 'Bearer %s');
+    if (!$jwt) {
+      http_response_code(401);
+      echo json_encode(['error' => 'Unauthorized']);
+      exit();
+    }
+
+    $userRole = Auth::getUserRole($jwt);
+    if ($userRole !== $role) {
+      http_response_code(403);
+      echo json_encode(['error' => 'Forbidden']);
+      exit();
+    }
+  }
   public function index(Request $request): void
   {
     $paginator = CampaignsPlayer::paginate(page: $request->getParam('page', 1));
@@ -97,6 +120,11 @@ class CampaignsPlayersController extends Controller
 
   public function charactersByCampaignId(Request $request): void
   {
+    $this->checkRole($request, 'dm');
+
+    $decodedToken = Auth::validateToken($request->getHeader('Authorization'));
+    $dm_id = $decodedToken->id;
+
     $params = $request->getParams();
     $campaign_id = $params['id'];
 

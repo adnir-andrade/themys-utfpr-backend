@@ -16,6 +16,7 @@ class Auth
     $payload = [
       'iss' => 'themys.com',      // Emissor do token
       'sub' => $user->id,         // Assunto do token (ID do usuário)
+      'role' => $user->role,      // Papel do usuário
       'iat' => time(),            // Tempo em que o token foi emitido
       'exp' => time() + 3600      // Tempo de expiração (1 hora)
     ];
@@ -28,6 +29,16 @@ class Auth
     try {
       $decoded = JWT::decode($token, new Key(self::$secretKey, 'HS256'));
       return User::find($decoded->sub);
+    } catch (\Exception $e) {
+      return null;
+    }
+  }
+
+  public static function getUserRole($token): ?string
+  {
+    try {
+      $decoded = JWT::decode($token, new Key(self::$secretKey, 'HS256'));
+      return $decoded->role;
     } catch (\Exception $e) {
       return null;
     }
