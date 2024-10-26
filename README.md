@@ -13,7 +13,7 @@ Themys Project is a Tabletop RPG assistent focused on providing players with dir
 - Docker
 - Docker Compose
 
-### To run
+### Getting Started
 
 #### Clone Repository
 
