@@ -18,8 +18,8 @@ Themys Project is a Tabletop RPG assistent focused on providing players with dir
 #### Clone Repository
 
 ```
-$ git clone git@github.com:SI-DABE/problem-track.git
-$ cd problem-track
+$ git clone git@github.com:adnir-andrade/themys-utfpr-backend.git
+$ cd themys-utfpr-backend
 ```
 
 #### Define the env variables
